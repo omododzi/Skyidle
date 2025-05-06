@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class CaracterCollider : MonoBehaviour
    public int Trees;
    public int Rocks;
    public int damage = 50;
+   private Treelcontroller tree;
    void Start()
    {
       contrl = GetComponent<CharacterController>();
@@ -17,6 +19,7 @@ public class CaracterCollider : MonoBehaviour
       if (hit.gameObject.CompareTag("Finish"))
       {
          Hitobj = hit.gameObject;
+         tree = Hitobj.GetComponent<Treelcontroller>();
          var island = Hitobj.GetComponent<IslandKey>();
          if (Trees >= island.Tree && Rocks >= island.Rock)
          {
@@ -35,8 +38,8 @@ public class CaracterCollider : MonoBehaviour
       if (other.gameObject.CompareTag("Tree"))
       {
          Hitobj = other.gameObject;
-         var tree = Hitobj.GetComponent<Treelcontroller>();
-         if (Input.GetKeyDown(KeyCode.E))
+         tree = Hitobj.GetComponent<Treelcontroller>();
+         if (Input.GetKeyDown(KeyCode.E) && tree.candamage)
          {
             Debug.Log(tree.hp);
             tree.hp -= damage;
@@ -44,6 +47,19 @@ public class CaracterCollider : MonoBehaviour
             {
                Trees += tree.resourse;
             }
+         }
+      }
+   }
+
+   private void Update()
+   {
+      if (Input.GetKeyDown(KeyCode.E) && tree.candamage)
+      {
+         Debug.Log(tree.hp);
+         tree.hp -= damage;
+         if (tree.hp <= 0)
+         {
+            Trees += tree.resourse;
          }
       }
    }

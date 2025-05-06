@@ -98,10 +98,8 @@ namespace TMPro
 
         void Awake()
         {
-            // Get a reference to the text component.
             m_TextComponent = gameObject.GetComponent<TMP_Text>();
 
-            // Get a reference to the camera rendering the text taking into consideration the text component type.
             if (m_TextComponent.GetType() == typeof(TextMeshProUGUI))
             {
                 m_Canvas = gameObject.GetComponentInParent<Canvas>();
@@ -110,12 +108,12 @@ namespace TMPro
                     if (m_Canvas.renderMode == RenderMode.ScreenSpaceOverlay)
                         m_Camera = null;
                     else
-                        m_Camera = m_Canvas.worldCamera;
+                        m_Camera = m_Canvas.worldCamera; // This is already a UnityEngine.Camera
                 }
             }
             else
             {
-                m_Camera = Camera.main;
+                m_Camera = UnityEngine.Camera.main; // Explicitly use UnityEngine.Camera
             }
         }
 

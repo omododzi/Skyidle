@@ -7,16 +7,29 @@ public class Treelcontroller : MonoBehaviour
 {
     public int hp = 100;
     public int resourse = 10;
-    public bool dead = false;
+    public bool candamage = false;
     private bool reset = false;
-    
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            candamage = true;
+        }
+    }
+ private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            candamage = false;
+        }
+    }
+
     private void FixedUpdate()
     {
         if (hp <= 0 && !reset)
         {
             Debug.Log("tree");
             gameObject.GetComponent<MeshRenderer>().enabled = false;
-            dead = true;
             StartCoroutine(Cooldown());
         }
     }
@@ -28,6 +41,5 @@ public class Treelcontroller : MonoBehaviour
         gameObject.GetComponent<MeshRenderer>().enabled = true;
         hp = 100;
         reset = false;
-        dead = false;
     }
 }
