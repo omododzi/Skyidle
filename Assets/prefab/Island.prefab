@@ -634,7 +634,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2368894837245774002
 Transform:
   m_ObjectHideFlags: 0
@@ -799,13 +799,14 @@ MonoBehaviour:
   Tree: 10
   Rock: 0
   Grass: 0
-  Distanse: 1
-  treewount: {fileID: 0}
-  rockwount: {fileID: 0}
-  grasswont: {fileID: 0}
-  rockimage: {fileID: 0}
-  grassimage: {fileID: 0}
-  treeimage: {fileID: 0}
+  Distanse: 2
+  treewount: {fileID: 4585271940653499056}
+  rockwount: {fileID: 1895775861613384929}
+  grasswont: {fileID: 189976778408174656}
+  rockimage: {fileID: 1657006729455878580}
+  grassimage: {fileID: 1070598012647982376}
+  treeimage: {fileID: 4789098228799698568}
+  islands: []
 --- !u!1 &8670497358830855804
 GameObject:
   m_ObjectHideFlags: 0

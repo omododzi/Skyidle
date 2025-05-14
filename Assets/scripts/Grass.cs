@@ -1,33 +1,20 @@
-using System;
-using System.Collections;
 using UnityEngine;
-using System.Collections.Generic;
-
-public class Treelcontroller : MonoBehaviour
+using System.Collections;
+public class Grass : MonoBehaviour
 {
-    public int hp = 100;
+    public int hp = 20;
     public int resourse = 10;
     public bool candamage = false;
     public bool reset = false;
-    public MeshRenderer mesh;
-
-    void Start()
-    {
-        if (mesh == null)
-        {
-            mesh = GetComponent<MeshRenderer>();
-        }
-       
-        
-    }
-    private void OnCollisionEnter(Collision other)
+    public MeshRenderer rend;
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             candamage = true;
         }
     }
- private void OnCollisionExit(Collision other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -40,7 +27,7 @@ public class Treelcontroller : MonoBehaviour
         if (hp <= 0 && !reset)
         {
             Debug.Log("tree");
-            mesh.enabled = false;
+            rend.enabled = false;
             StartCoroutine(Cooldown());
         }
     }
@@ -48,9 +35,9 @@ public class Treelcontroller : MonoBehaviour
     IEnumerator Cooldown()
     {
         reset = true;
-        yield return new WaitForSeconds(2);
-        mesh.enabled = true;
-        hp = 100;
+        yield return new WaitForSeconds(15);
+        rend.enabled = true;
+        hp =20;
         reset = false;
     }
 }

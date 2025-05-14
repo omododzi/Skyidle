@@ -8,8 +8,11 @@ public class CaracterCollider : MonoBehaviour
    private GameObject Hitobj;
    public int Trees;
    public int Rocks;
+   public int Grass;
    public int damage = 50;
    private Treelcontroller tree;
+   private Rock rock;
+   private Grass grass;
    void Start()
    {
       contrl = GetComponent<CharacterController>();
@@ -19,27 +22,44 @@ public class CaracterCollider : MonoBehaviour
       if (hit.gameObject.CompareTag("Finish"))
       {
          Hitobj = hit.gameObject;
-         tree = Hitobj.GetComponent<Treelcontroller>();
          var island = Hitobj.GetComponent<IslandKey>();
-         if (Trees >= island.Tree && Rocks >= island.Rock)
+         if (Trees >= island.Tree && Rocks >= island.Rock && Grass >= island.Grass)
          {
-            Hitobj.GetComponent<BoxCollider>().enabled = false;
-            Hitobj.transform.GetChild(0).gameObject.SetActive(true);
             Trees -= island.Tree;
             Rocks -= island.Rock;
+            Grass -= island.Grass;
+            island.OpenThisIslands();
          }
       }
-
-    
    }
 
    void OnTriggerStay(Collider other)
    {
+      
       if (other.gameObject.CompareTag("Tree"))
       {
          Hitobj = other.gameObject;
          tree = Hitobj.GetComponent<Treelcontroller>();
-         if (Input.GetKeyDown(KeyCode.E) && tree.candamage)
+      }
+
+      if (other.gameObject.CompareTag("Rock"))
+      {
+         Hitobj = other.gameObject;
+         rock = Hitobj.GetComponent<Rock>();
+      }
+
+      if (other.gameObject.CompareTag("Grass"))
+      {
+         Hitobj = other.gameObject;
+         grass = Hitobj.GetComponent<Grass>();
+      }
+   }
+
+   private void Update()
+   {
+      if (tree != null)
+      {
+         if (Input.GetKeyDown(KeyCode.E) && tree.candamage  && !tree.reset)
          {
             Debug.Log(tree.hp);
             tree.hp -= damage;
@@ -49,17 +69,29 @@ public class CaracterCollider : MonoBehaviour
             }
          }
       }
-   }
+      
 
-   private void Update()
-   {
-      if (Input.GetKeyDown(KeyCode.E) && tree.candamage)
+      if (rock != null)
       {
-         Debug.Log(tree.hp);
-         tree.hp -= damage;
-         if (tree.hp <= 0)
+         if (Input.GetKeyDown(KeyCode.E) && rock.candamage  && !rock.reset)
          {
-            Trees += tree.resourse;
+            rock.hp -= damage;
+            if (rock.hp <= 0)
+            {
+               Rocks += rock.resourse;
+            }
+         }
+      }
+      
+      if(grass != null)
+      {
+         if (Input.GetKeyDown(KeyCode.E) && grass.candamage &&  !grass.reset)
+         {
+            grass.hp -= damage;
+            if (grass.hp <= 0)
+            {
+               Grass += grass.resourse;
+            }
          }
       }
    }

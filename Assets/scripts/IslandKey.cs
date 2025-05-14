@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-
+using System.Collections.Generic;
 public class IslandKey : MonoBehaviour
 {
     public int Tree = 0;
@@ -14,18 +14,20 @@ public class IslandKey : MonoBehaviour
     public GameObject rockimage;
     public GameObject grassimage;
     public GameObject treeimage;
+    
+    public List<GameObject> islands = new List<GameObject>();
 
     void Start()
     {
-        Tree = Random.Range(1, Distanse * 10);
+        Tree = Random.Range(10, Distanse * 100);
         if (Distanse > 1)
         {
-            Rock = Random.Range(1, Distanse * 10);
+            Rock = Random.Range(10, Distanse * 100);
         }
 
         if (Distanse >2)
         {
-            Grass = Random.Range(1, Distanse * 10);
+            Grass = Random.Range(10, Distanse * 100);
         }
 
         if (Rock >=1)
@@ -62,8 +64,19 @@ public class IslandKey : MonoBehaviour
         }
     }
 
-    public void OpenNewIslands()
+    public void OpenThisIslands()
     {
-        
+        rockimage.SetActive(false);
+        treeimage.SetActive(false);
+        grassimage.SetActive(false);
+        gameObject.GetComponent<BoxCollider>().enabled = false;
+        gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        if (islands != null)
+        {
+            for (int i = 0; i < islands.Count; i++)
+            {
+                islands[i].SetActive(true);
+            }
+        }
     }
 }
